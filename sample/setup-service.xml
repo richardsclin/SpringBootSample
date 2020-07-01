@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+###########################################################################
+#    FILE NAME:   setup-service.xml
+#    DESCRIPTION: 自動化 建立 後端 Service Project
+#    WRITTEN BY:  Longan
+#    MODIFIED:    Longan 2020/06/19 - Initial version.
+############################################################################
+-->
+<project default="easy.run">
+  <tstamp />
+  <property name="base.dir" value="." />
+
+  <target name="easy.run">
+    <input message="  ******  please keyin service name  ******  " addproperty="project.name" />
+    <property name="service.name" value="${project.name}-service"/>
+    <property name="copy.dir" value="${java.io.tmpdir}${service.name}"/>
+
+    <antcall target="copySource"/>
+
+    <antcall target="replaceLetter"/>
+
+    <antcall target="moveTarget"/>
+
+    <echo></echo>
+    <echo>  ****** please copy  [${copy.dir}]  to workspace ******  </echo>
+    <echo></echo>
+  </target>
+
+  <target name="copySource">
+    <delete dir="${copy.dir}" failonerror="false" verbose="false"/>
+    <mkdir dir="${copy.dir}"/>
+
+    <copy todir="${copy.dir}" encoding="utf-8" outputencoding="utf-8" verbose="false">
+      <fileset dir="${base.dir}" >
+        <exclude name="**/.git/**"/>
+        <exclude name="**/setup-service.xml"/>
+      </fileset>
+    </copy>
+  </target>
+
+  <target name="replaceLetter">
+    <replace file="${copy.dir}/settings.gradle" encoding="utf-8">
+        <replacefilter token="sample-service" value="${service.name}" />
+    </replace>
+
+    <replace file="${copy.dir}/build.gradle" encoding="utf-8">
+        <replacefilter token="sample.war" value="${service.name}.war" />
+    </replace>
+
+    <replace file="${copy.dir}/src/main/resources/bootstrap.yml" encoding="utf-8">
+        <replacefilter token="spring.application.name: sample" value="spring.application.name: ${service.name}" />
+    </replace>
+
+    <replace file="${copy.dir}/src/main/resources/WEB-INF/classes/bootstrap-sit.yml" encoding="utf-8">
+        <replacefilter token="spring.application.name: sample" value="spring.application.name: ${service.name}" />
+    </replace>
+
+    <replace file="${copy.dir}/src/main/resources/WEB-INF/classes/bootstrap-prod.yml" encoding="utf-8">
+        <replacefilter token="spring.application.name: sample" value="spring.application.name: ${service.name}" />
+    </replace>
+
+    <replace file="${copy.dir}/src/main/resources/logback-spring.xml" encoding="utf-8">
+        <replacefilter token="D:/logs/sample-service" value="D:/logs/${project.name}" />
+        <replacefilter token="sample.log" value="service.log" />
+    </replace>
+
+    <replace file="${copy.dir}/src/main/resources/sample.yml" encoding="utf-8">
+        <replacefilter token="D:/logs/sample/sample.log" value="D:/logs/${project.name}/service.log" />
+    </replace>
+
+    <replace file="${copy.dir}/src/main/resources/config/maps/generatorConfig.xml" encoding="utf-8">
+        <replacefilter token="sample-service" value="${service.name}" />
+    </replace>
+
+    <replace dir="${copy.dir}/src/main/resources/config/maps" value="com.fubon.${project.name}" encoding="utf-8">
+        <include name="**/*.xml"/>
+        <replacetoken>com.fubon.portal</replacetoken>
+    </replace>
+
+    <replace dir="${copy.dir}/src/main/java/com/fubon" value="com.fubon.${project.name}" encoding="utf-8">
+        <include name="**/*.java"/>
+        <replacetoken>com.fubon.portal</replacetoken>
+    </replace>
+
+    <replace dir="${copy.dir}/src/test/java/com/fubon" value="com.fubon.${project.name}" encoding="utf-8">
+        <include name="**/*.java"/>
+        <replacetoken>com.fubon.portal</replacetoken>
+    </replace>
+  </target>
+
+  <target name="moveTarget">
+    <move file="${copy.dir}/src/main/java/com/fubon/portal" tofile="${copy.dir}/src/main/java/com/fubon/${project.name}" encoding="utf-8"/>
+    <move file="${copy.dir}/src/main/resources/sample.yml" tofile="${copy.dir}/src/main/resources/${service.name}.yml" encoding="utf-8"/>
+    <move file="${copy.dir}/src/main/resources/sample-dev.yml" tofile="${copy.dir}/src/main/resources/${service.name}-dev.yml" encoding="utf-8"/>
+    <move file="${copy.dir}/src/main/resources/sample-sit.yml" tofile="${copy.dir}/src/main/resources/${service.name}-sit.yml" encoding="utf-8"/>
+    <move file="${copy.dir}/src/main/resources/sample-prod.yml" tofile="${copy.dir}/src/main/resources/${service.name}-prod.yml" encoding="utf-8"/>
+
+    <!--<move file="${copy.dir}/src/test/java/com/fubon/portal/PortalApplicationTests.java" tofile="${copy.dir}/src/test/java/com/fubon/portal/${project.name}ApplicationTests.java"/>-->
+    <!--<move file="${copy.dir}/src/test/java/com/fubon/portal/PortalControllerTest.java" tofile="${copy.dir}/src/test/java/com/fubon/portal/${project.name}ControllerTest.java"/>-->
+    <move file="${copy.dir}/src/test/java/com/fubon/portal" tofile="${copy.dir}/src/test/java/com/fubon/${project.name}" encoding="utf-8"/>
+  </target>
+
+</project>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+  <context id="contextMurex" defaultModelType="flat" targetRuntime="MyBatis3Simple">
+    <jdbcConnection connectionURL="jdbc:oracle:thin:@172.16.241.111:5211:TMUXDB" driverClass="oracle.jdbc.driver.OracleDriver" password="Fubon#123" userId="mxacc" />
+    <javaModelGenerator targetPackage="com.fubon.portal.repository" targetProject="sample-service/src/main/java" />
+    <sqlMapGenerator targetPackage="config.maps.murex" targetProject="sample-service/MybatisGenXML" />
+    <javaClientGenerator targetPackage="com.fubon.portal.repository" targetProject="sample-service/src/main/java" type="XMLMAPPER">
+    	<!-- property name="rootInterface" value="com.xx.demog.dao.BaseDao"/-->
+    </javaClientGenerator>
+    <table schema="mxacc" tableName="HRIS_EMP" domainObjectName="Employee">
+      <!-- property name="rootClass" value="com.fubon.datasource.Auditable"/>
+      <generatedKey column="bookid" sqlStatement="select BOOK_SEQ.nextval from dual" />
+      <columnOverride column="bookid" javaType="Integer" /-->
+      
+    </table>
+    <table tableName="HRIS_BUDEPT" domainObjectName="BuDept">
+    </table>
+  </context>
+</generatorConfiguration>

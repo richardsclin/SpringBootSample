@@ -1,0 +1,12 @@
+spring.application.name: sample
+spring.profiles.active: prod
+
+spring.cloud.config.uri: http://172.16.220.53:8802/config/    #config server address
+spring.cloud.config.username: user                            #config server id,password
+spring.cloud.config.password: "{cipher}6ad98b9436dce0d6bf84a800d88fb79d79150ca1d35ae034b64993f7e1a838b9"
+spring.config.name: ${spring.application.name}  #local 設定檔的名稱, 不用預設的(Application.yml)
+spring.cloud.config.profile: ${spring.profiles.active}
+spring.cloud.config.name:  ${spring.application.name} #config server上面的名稱
+encrypt.key: fmg  #config server密碼編碼
+
+#spring.cloud.config.label: xxx

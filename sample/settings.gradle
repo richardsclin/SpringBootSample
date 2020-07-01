@@ -1,0 +1,6 @@
+rootProject.name = 'sample-service'
+//include  ':common-base'
+//include  ':common-security'
+
+//project(':common-security').projectDir = new File(settingsDir, '../common-security')
+//project(':common-base').projectDir = new File(settingsDir, '../common-base')

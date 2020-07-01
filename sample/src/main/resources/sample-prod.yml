@@ -1,0 +1,16 @@
+spring:
+  datasource: #default
+    url: jdbc:oracle:thin:@172.16.229.14:1521:MUXDB1
+    username: mxacc
+    password: "{cipher}75f8b8213434039cd822f94156e264a5d24ef0e9808255cd4bc2957cd66bfed8"
+    
+  cloud:
+    consul:
+      host: 172.16.220.53           #Consul service register server address
+      port: 8500                    #Consul service register server port
+      discovery:
+        ipAddress: 172.16.220.53    #your service discovery address(where it running)
+        acl-token: 75c2b055-42cb-1824-3fd4-213ce8557888
+        
+security:
+  needAuthenticated: false

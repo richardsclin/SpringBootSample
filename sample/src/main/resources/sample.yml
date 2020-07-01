@@ -1,0 +1,54 @@
+#不同專案, 正常會改的是以下這2個
+server.port: 8804
+logging:
+  file: D:/logs/sample/sample.log        #open this log for spring boot admin monitor
+
+management.endpoints.web.exposure.include: "*"
+management.endpoint.health.show-details: always
+management.health.db.enabled: true
+management.health.consul.enabled: false
+
+server.servlet.context-path: /${spring.application.name}  
+spring.jmx.default-domain: ${spring.application.name}  
+  
+spring:
+  boot.admin.client.instance.prefer-ip: true   #用IP註冊, 預設為主機名稱
+  http:
+    encoding: 
+      charset: UTF-8
+      enabled: true   
+      force: true
+  cloud:
+    discovery.client.composite-indicator.enabled: false
+    consul:
+      ribbon:
+        enabled: true   
+      discovery:
+        enabled: true
+        port: ${server.port}
+        health-check-interval: 60s
+        preferIpAddress: true        # 用IP註冊, 預設為主機名稱
+        serviceName: ${spring.application.name}  # 注册到consul的服务名称
+        healthCheckPath: ${server.servlet.context-path}/actuator/health
+  main:
+    allow-bean-definition-overriding: true
+  datasource: #default
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    max-idle: 10
+    max-wait: 10000
+    min-idle: 5
+    initial-size: 5
+    sql-script-encoding: utf-8
+    
+#mybatis
+mybatis.configuration.map-underscore-to-camel-case: true
+#mybatis.mapper-locations: classpath*:config/maps/murex/*Mapper.xml
+spring.jpa.open-in-view: false
+spring.jpa.properties.hibernate.temp.use_jdbc_metadata_defaults: false
+spring.jpa.database-platform: org.hibernate.dialect.Oracle10gDialect
+
+#pagehelper分页插件配置
+pagehelper.helperDialect: oracle
+pagehelper.reasonable: true
+pagehelper.supportMethodsArguments: true
+pagehelper.params: count=countSql

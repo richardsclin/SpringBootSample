@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="LOGS" value="D:/logs/sample-service" />
+ 
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!--格式化輸出：%d:表示日期    %thread:表示線程名     %-5level:級別從左顯示5個字符寬度  %msg:日誌消息    %n:是換行符-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+ 
+    <appender name="RollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS}/sample.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>[%d{MM-dd HH:mm:ss.SSS}]  %.42t,%c{1},%L: %msg%n%throwable</Pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+ 
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily and when the file reaches 10 MegaBytes -->
+            <fileNamePattern>${LOGS}/archived/sample-%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+ 
+    <appender name="WebLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS}/webLog.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>[%d{MM-dd HH:mm:ss.SSS}] %m %n</Pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+ 
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily and when the file reaches 10 MegaBytes -->
+            <fileNamePattern>${LOGS}/archived/webLog-%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+     
+    <!-- LOG everything at INFO level -->
+    <root level="info">
+        <appender-ref ref="RollingFile" />
+        <appender-ref ref="Console" />
+    </root>
+ 
+    <!-- LOG "com.baeldung*" at TRACE level -->
+    <!-- logger name="com.xx.sample.WebLogAspect" level="trace" additivity="false">
+        <appender-ref ref="WebLog" />
+        <appender-ref ref="Console" />
+    </logger -->
+</configuration>

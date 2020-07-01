@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+  <context id="context" defaultModelType="flat" targetRuntime="MyBatis3Simple">
+    <jdbcConnection connectionURL="jdbc:oracle:thin:@172.16.241.111:5211:TMUXDB" driverClass="oracle.jdbc.driver.OracleDriver" password="Fubon#123" userId="mxacc_dev1" />
+    <javaModelGenerator targetPackage="com.fubon.portal.repository" targetProject="sample-service/src/main/java" />
+    <sqlMapGenerator targetPackage="config.maps" targetProject="sample-service/MybatisGenXML" />
+    <javaClientGenerator targetPackage="com.fubon.portal.repository" targetProject="sample-service/src/main/java" type="XMLMAPPER">
+    	<!-- property name="rootInterface" value="com.xx.demog.dao.BaseDao"/-->
+    </javaClientGenerator>
+        
+    <table tableName="PORTAL_AGENT" domainObjectName="Agent">
+      <property name="rootClass" value="com.fubon.datasource.Auditable"/>
+      <generatedKey column="sn" sqlStatement="select PORTAL_SEQ.nextval from dual" />
+      
+    </table>
+            
+    <table tableName="PORTAL_MENU_MY_FAVORITE" domainObjectName="MyFavoriteMenu">
+      <property name="rootClass" value="com.fubon.datasource.Auditable"/>
+    </table>
+    
+    <table tableName="PORTAL_ANNOUNCE" domainObjectName="AnnounceInfo">
+      <property name="rootClass" value="com.fubon.datasource.Auditable"/>
+      <generatedKey column="sn" sqlStatement="select PORTAL_SEQ.nextval from dual" />
+    </table>
+  </context>
+</generatorConfiguration>

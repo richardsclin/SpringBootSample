@@ -1,0 +1,12 @@
+#不同專案, 正常會改的是以下這2個 
+spring.application.name: sample    #System name
+spring.profiles.active: dev        #enviroment
+
+spring.cloud.config.uri: http://172.16.240.73:8802/config/        #config server address
+spring.cloud.config.username: user                                #config server id,password
+spring.cloud.config.password: "{cipher}6ad98b9436dce0d6bf84a800d88fb79d79150ca1d35ae034b64993f7e1a838b9"
+spring.config.name: ${spring.application.name}  #local 設定檔的名稱, 不用預設的(Application.yml)
+spring.cloud.config.profile: ${spring.profiles.active}
+spring.cloud.config.name:  ${spring.application.name} #config server上面的名稱
+encrypt.key: fmg
+
