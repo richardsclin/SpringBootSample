@@ -9,7 +9,7 @@ spring:
     show-sql: true
   cloud:
     consul:   
-      enabled: false
+      enabled: false    #local開發不需註冊可以disable
       host: localhost   #Consul service register server address
       port: 8500        #Consul service register server port
       discovery:
